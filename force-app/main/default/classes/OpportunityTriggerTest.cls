@@ -31,5 +31,35 @@ public class OpportunityTriggerTest {
         Test.stopTest();
         Opportunity o = [select id, Dolmetscher_Email__c from Opportunity where Id = :vermittlung.Id];
         System.assertEquals('Fall: 1<br>Arabisch<br><b>am 30.01.2020 um 10:00 Uhr (1 Stunde)</b><br>Details<br>Adresse<br>', o.Dolmetscher_Email__c);
-	}    
+	}
+
+
+   @isTest static void testCreateTranslAidCampaign() {
+        // Get Record Type Ids
+		Id helferkreisRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Helferkreis').getRecordTypeId();
+		Id ehrenamtRecordTypeId = Schema.SObjectType.Contact.getRecordTypeInfosByDeveloperName().get('Ehrenamtliche').getRecordTypeId();
+		Id vermittlungRecordTypeId = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName().get('TranslAid_Vermittlung').getRecordTypeId();
+		Id klientRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('Fluchtling').getRecordTypeId();
+
+        // create test records
+        Account helferkreis = new Account(Name = 'Helferkeis', RecordTypeId = helferkreisRecordTypeId);
+        insert helferkreis;
+        Contact sprachmittler1 = new Contact(AccountId = helferkreis.Id, FirstName = 'Vorname', LastName = 'Nachname', RecordTypeId = ehrenamtRecordTypeId, Sprachen__c = 'Arabisch;Bulgarisch', Status_TranslAid__c = 'startbereit/Einführung besucht');
+        insert sprachmittler1;
+        Contact sprachmittler2 = new Contact(AccountId = helferkreis.Id, FirstName = 'Vorname2', LastName = 'Nachname2', RecordTypeId = ehrenamtRecordTypeId, Sprachen__c = 'Bengali', Status_TranslAid__c = 'kommt zur Einführung');
+        insert sprachmittler2;
+        Account klient = new Account(FirstName = 'Vorname', LastName = 'Nachname', RecordTypeId = klientRecordTypeId);
+        insert klient;
+
+        date myCloseDate = date.newInstance(2020,01,30);
+        Opportunity vermittlung = new Opportunity(Name = 'Vermittlung', AccountId = klient.Id, RecordTypeId = vermittlungRecordTypeId, StageName = 'Open', CloseDate = myCloseDate, Sprachen__c = 'Arabisch');
+        insert vermittlung;
+        List<Opportunity> opportunityList = new List<Opportunity>();
+        opportunityList.add(vermittlung);
+        Test.startTest();
+        List<ID> campaigns = OpportunityActions.createTranslAidCampaign(opportunityList);
+        Test.stopTest();
+        List<Campaign> campaignsResult = [select id from Campaign];
+        System.assertEquals(campaigns.size(), campaignsResult.size());
+   }
 }

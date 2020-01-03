@@ -19,4 +19,31 @@ public without sharing class OpportunityActions {
         }
     }
 
+    @InvocableMethod(label='Create TranslAid Campaign' description='Create an email campaign for a TranslAid Opportunity.')
+    public static List<ID> createTranslAidCampaign(List<Opportunity> opportunityList) {
+        Id translaidRecordTypeId = Schema.SObjectType.Campaign.getRecordTypeInfosByDeveloperName().get('TranslAid_Sprachmittler_in').getRecordTypeId();
+        List<ID> campaigns = new List<ID>();
+        List<CampaignMember> members = new List<CampaignMember>();
+        for (Opportunity o : opportunityList) {
+            Opportunity curOpportunity = [SELECT Name, Sprachen__c, OwnerId FROM Opportunity WHERE Id = :o.Id];
+            // create a new campaign
+            Campaign camp = new Campaign(Name='Email ' + curOpportunity.Name, IsActive=true, OwnerId=curOpportunity.OwnerId, RecordTypeId=translaidRecordTypeId, StartDate=Date.today(), Status='In Progress', Type='TranslAid Email');
+            Insert camp;
+
+            // link opportunity with campaign
+            o.CampaignId = camp.Id;
+            campaigns.add(camp.Id);
+
+            // select Contacts with Sprachen
+            List<Contact> sprachmittler = [SELECT Id, Name FROM Contact WHERE Status_TranslAid__c = 'startbereit/Einführung besucht' AND Sprachen__c includes (:curOpportunity.Sprachen__c)];
+            for (Contact c : sprachmittler) {
+                // add campaign member
+                CampaignMember m = new CampaignMember(CampaignId=camp.Id, ContactId=c.Id, Status='Sent');
+                members.add(m);
+            }
+        }
+        Insert members;
+        Update opportunityList;
+        return campaigns;
+    }
 }
