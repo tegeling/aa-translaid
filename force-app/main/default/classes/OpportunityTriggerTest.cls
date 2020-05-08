@@ -24,14 +24,14 @@ public class OpportunityTriggerTest {
     insert helferkreis;
     Contact vermittler = new Contact(
       AccountId = helferkreis.Id,
-      FirstName = 'Vorname',
-      LastName = 'Nachname',
+      FirstName = 'VornameVermittler',
+      LastName = 'NachnameVermittler',
       RecordTypeId = ehrenamtRecordTypeId
     );
     insert vermittler;
     Account klient = new Account(
-      FirstName = 'Vorname',
-      LastName = 'Nachname',
+      FirstName = 'FirstKlient',
+      LastName = 'LastKlient',
       RecordTypeId = klientRecordTypeId
     );
     insert klient;
@@ -41,7 +41,8 @@ public class OpportunityTriggerTest {
       AccountId = klient.Id,
       RecordTypeId = vermittlungRecordTypeId,
       StageName = 'Open',
-      CloseDate = myCloseDate
+      CloseDate = myCloseDate,
+      Datenschutz__c = true
     );
     insert vermittlung;
 
@@ -90,25 +91,25 @@ public class OpportunityTriggerTest {
     insert helferkreis;
     Contact sprachmittler1 = new Contact(
       AccountId = helferkreis.Id,
-      FirstName = 'Vorname',
-      LastName = 'Nachname',
+      FirstName = 'VornameSprachmittler1',
+      LastName = 'NachnameSprachmittler1',
       RecordTypeId = ehrenamtRecordTypeId,
       Sprachen__c = 'Arabisch;Bulgarisch',
-      Status_TranslAid__c = 'startbereit/Einführung besucht'
+      Status_TranslAid__c = 'aktiv'
     );
     insert sprachmittler1;
     Contact sprachmittler2 = new Contact(
       AccountId = helferkreis.Id,
-      FirstName = 'Vorname2',
-      LastName = 'Nachname2',
+      FirstName = 'FirstSprachmittler2',
+      LastName = 'LastSprachmittler2',
       RecordTypeId = ehrenamtRecordTypeId,
       Sprachen__c = 'Bengali',
       Status_TranslAid__c = 'kommt zur Einführung'
     );
     insert sprachmittler2;
     Account klient = new Account(
-      FirstName = 'Vorname',
-      LastName = 'Nachname',
+      FirstName = 'VornameKlient',
+      LastName = 'NachnameKlient',
       RecordTypeId = klientRecordTypeId
     );
     insert klient;
@@ -120,7 +121,8 @@ public class OpportunityTriggerTest {
       RecordTypeId = vermittlungRecordTypeId,
       StageName = 'Open',
       CloseDate = myCloseDate,
-      Sprachen__c = 'Arabisch'
+      Sprachen__c = 'Arabisch',
+      Datenschutz__c = true
     );
     insert vermittlung;
     List<Opportunity> opportunityList = new List<Opportunity>();

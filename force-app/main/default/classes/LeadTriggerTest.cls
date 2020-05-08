@@ -40,7 +40,7 @@ public with sharing class LeadTriggerTest {
     insert translAidAktionValid;
     Workshop__c translAidAktionPast = new Workshop__c(
       Tr_ger__c = traeger.Id,
-      Name = 'Aktion',
+      Name = 'translAidAktionPast',
       Workshop_Typ__c = 'TranslAid Einführung',
       RecordTypeId = ehrenamtRecordTypeId,
       ArrivalAid_Programm__c = 'TranslAid',
@@ -50,7 +50,7 @@ public with sharing class LeadTriggerTest {
     insert translAidAktionPast;
     Workshop__c translAidAktionNoStartdate = new Workshop__c(
       Tr_ger__c = traeger.Id,
-      Name = 'Aktion2',
+      Name = 'translAidAktionNoStartdate',
       Workshop_Typ__c = 'TranslAid Einführung',
       RecordTypeId = ehrenamtRecordTypeId,
       ArrivalAid_Programm__c = 'TranslAid'

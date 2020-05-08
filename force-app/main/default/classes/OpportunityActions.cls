@@ -72,7 +72,7 @@ public without sharing class OpportunityActions {
         SELECT Id, Name
         FROM Contact
         WHERE
-          Status_TranslAid__c = 'startbereit/Einführung besucht'
+          Status_TranslAid__c = 'aktiv'
           AND Sprachen__c INCLUDES (:curOpportunity.Sprachen__c)
       ];
       for (Contact c : sprachmittler) {
