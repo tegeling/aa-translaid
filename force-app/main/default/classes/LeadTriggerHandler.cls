@@ -1,20 +1,21 @@
 public with sharing class LeadTriggerHandler {
-    private boolean m_isExecuting = false;
-    private integer BatchSize = 0;
-    
-    public LeadTriggerHandler(boolean isExecuting, integer size)
-    {
-        m_isExecuting = isExecuting;
-        BatchSize = size;
-    }
+  private boolean isExecuting = false;
+  private integer batchSize = 0;
 
-   public void OnBeforeInsert(List<Lead> newLead)
-    {
-        LeadActions.translaidSetAktionstermine (newLead);
-    }
-    public void OnBeforeUpdate( List<Lead> newLead, List<Lead> oldLead, Map<ID, Lead> newLeadMap , Map<ID, Lead> oldLeadMap )
-    {
-        LeadActions.translaidSetAktionstermine (newLead);
-    }
+  public LeadTriggerHandler(boolean isExecuting, integer size) {
+    isExecuting = isExecuting;
+    batchSize = size;
+  }
 
+  public void onBeforeInsert(List<Lead> newLead) {
+    LeadActions.translaidSetAktionstermine(newLead);
+  }
+  public void onBeforeUpdate(
+    List<Lead> newLead,
+    List<Lead> oldLead,
+    Map<ID, Lead> newLeadMap,
+    Map<ID, Lead> oldLeadMap
+  ) {
+    LeadActions.translaidSetAktionstermine(newLead);
+  }
 }

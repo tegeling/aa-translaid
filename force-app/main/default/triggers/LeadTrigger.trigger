@@ -1,19 +1,21 @@
-trigger LeadTrigger on Lead (before insert, before update) {
+trigger LeadTrigger on Lead(before insert, before update) {
+  LeadTriggerHandler handler = new LeadTriggerHandler(
+    Trigger.isExecuting,
+    Trigger.size
+  );
 
-    LeadTriggerHandler handler = new LeadTriggerHandler(Trigger.isExecuting, Trigger.size);
-
-    if( Trigger.isInsert )
-    {
-        if(Trigger.isBefore)
-        {
-            handler.OnBeforeInsert(trigger.New);
-        }
+  if (Trigger.isInsert) {
+    if (Trigger.isBefore) {
+      handler.onBeforeInsert(Trigger.New);
     }
-    else if ( Trigger.isUpdate )
-    {
-        if(Trigger.isBefore)
-        {
-            handler.OnBeforeUpdate(trigger.New ,trigger.Old,Trigger.NewMap,Trigger.OldMap);
-        }
+  } else if (Trigger.isUpdate) {
+    if (Trigger.isBefore) {
+      handler.onBeforeUpdate(
+        Trigger.New,
+        Trigger.Old,
+        Trigger.NewMap,
+        Trigger.OldMap
+      );
     }
+  }
 }

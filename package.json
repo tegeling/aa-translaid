@@ -1,0 +1,26 @@
+{
+  "name": "aa-translaid",
+  "version": "1.0.0",
+  "description": "This repository contains a Salesforce project to support the non-profit organisation ArrivalAid TranslAid - see https://www.translaid.org/ for more details.",
+  "main": "index.js",
+  "dependencies": {
+    "eslint": "^5.16.0"
+  },
+  "devDependencies": {
+    "prettier": "1.19.1",
+    "prettier-plugin-apex": "1.4.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tegeling/aa-translaid.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tegeling/aa-translaid/issues"
+  },
+  "homepage": "https://github.com/tegeling/aa-translaid#readme"
+}
