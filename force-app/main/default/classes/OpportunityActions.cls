@@ -28,7 +28,24 @@ public without sharing class OpportunityActions {
             ')</b><br>';
         }
         o.Dolmetscher_Email__c += o.Termin_Details__c + '<br>';
-        o.Dolmetscher_Email__c += o.Termin_Adresse__c + '<br>';
+        String adresse = '';
+        List<Account> adressAccount = [
+          SELECT BillingStreet, BillingPostalCode, BillingCity
+          FROM Account
+          WHERE Id = :o.Termin_Standort__c
+        ];
+        if (adressAccount.size() > 0) {
+          if (adressAccount[0].BillingStreet != null) {
+            adresse += adressAccount[0].BillingStreet + '<br>';
+          }
+          if (adressAccount[0].BillingPostalCode != null) {
+            adresse += adressAccount[0].BillingPostalCode + ' ';
+          }
+          if (adressAccount[0].BillingCity != null) {
+            adresse += adressAccount[0].BillingCity + '<br>';
+          }
+        }
+        o.Dolmetscher_Email__c += adresse;
       }
     }
   }
