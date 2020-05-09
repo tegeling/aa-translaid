@@ -6,11 +6,11 @@ trigger OpportunityTrigger on Opportunity(before insert, before update) {
 
   if (Trigger.isInsert) {
     if (Trigger.isBefore) {
-      handler.OnBeforeInsert(Trigger.New);
+      handler.onBeforeInsert(Trigger.New);
     }
   } else if (Trigger.isUpdate) {
     if (Trigger.isBefore) {
-      handler.OnBeforeUpdate(
+      handler.onBeforeUpdate(
         Trigger.New,
         Trigger.Old,
         Trigger.NewMap,
