@@ -3,8 +3,8 @@ public with sharing class OpportunityTriggerHandler {
   private integer batchSize = 0;
 
   public OpportunityTriggerHandler(boolean isExecuting, integer size) {
-    m_isExecuting = isExecuting;
-    BatchSize = size;
+    isExecuting = isExecuting;
+    batchSize = size;
   }
 
   public void onBeforeInsert(List<Opportunity> newOpportunity) {
